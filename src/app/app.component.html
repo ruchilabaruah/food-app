@@ -1,0 +1,90 @@
+<div class="container">
+  <header class="header">
+    <span style="float: left; margin-top: 15px; margin-left: 25px; cursor: pointer"
+          *ngIf="foodRecipeView"
+          (click)="goBackToList()">Go Back</span>
+    <div style="padding-top: 15px">Best Food App</div>
+  </header>
+
+  <!--Single recipe view-->
+  <section [hidden]="!foodRecipeView">
+    <div class="card card-full-view"
+         *ngIf="foodItemSelected">
+      <img [src]="foodItemSelected.image"
+           [alt]="foodItemSelected.name"
+           style="width:100%">
+      <div class="container">
+        <h4><b>{{ foodItemSelected.name }}</b></h4>
+        <p>${{ foodItemSelected.price }}</p>
+        <p-spinner size="30"
+                   [(ngModel)]="foodItemSelected.cartCount"
+                   (onChange)="incDecItem(foodItemSelected, foodItemSelected.cartCount)"
+                   [min]="0"
+                   [step]="1"></p-spinner>
+        <p>{{ foodItemSelected.details }}</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- List view -->
+  <section [hidden]="foodRecipeView">
+    <h5 style="float: left">FAVORITES</h5>
+    <div style="float: right; margin-top: 20px">Cart Value: {{cartCount}}</div>
+    <p style="clear: both;">Enjoy what you have been ordering!</p>
+    <div class="flexboxC results"
+         *ngIf="favoriteList">
+      <div class="card"
+           *ngFor="let item of favoriteList">
+        <img [src]="item.image"
+             [alt]="item.name"
+             (click)="visitFoodItem(item)">
+        <div class="container">
+          <div style="float: left">
+            <h4><b>{{ item.name }}</b></h4>
+            <p>${{ item.price }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section [hidden]="foodRecipeView">
+    <div class="search">
+      <input type="text"
+             class="form-control"
+             placeholder="Search"
+             [(ngModel)]="searchFood"
+             (keyup)="searchItem()">
+    </div>
+    <h5 class="margin-top-10">SELECT CATEGORIES</h5>
+    <div class="cat-display">
+      <div class="card"
+           *ngFor="let cat of categoryList"
+           (click)="getListOfSelectedCategory(cat)">
+        <img [src]="cat.image"
+             [alt]="cat.name"
+             style="width:30px; height: 30px;">
+        <span>{{cat.name}}</span>
+      </div>
+    </div>
+  </section>
+  <section [hidden]="foodRecipeView">
+    <div class="flexboxCategory results"
+         *ngIf="foodListByCategory">
+      <div class="card"
+           *ngFor="let item of foodListByCategory">
+        <img [src]="item.image"
+             [alt]="item.name"
+             style="width:100%"
+             (click)="visitFoodItem(item)">
+        <div class="container">
+          <h4><b>{{ item.name }}</b></h4>
+          <p>${{ item.price }}</p>
+          <button class="btn btn-primary"
+                  type="button"
+                  (click)="addToBag(item)">ADD TO BAG
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

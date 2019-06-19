@@ -1,2 +1,2 @@
 # food-app
-# food-app that displays list of food items to order.
+## Displays list of food items, adds to cart, searches food items according to user's preference.
